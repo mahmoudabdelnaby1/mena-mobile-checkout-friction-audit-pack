@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MENA Mobile Checkout Friction Grader</title>
+<style>
+  :root { --primary: #4f46e5; --bg: #f8fafc; --card: #ffffff; --border: #e2e8f0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); padding: 2rem 1rem; margin: 0; }
+  .container { max-width: 800px; margin: 0 auto; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; }
+  h1 { font-size: 1.5rem; margin-top: 0; }
+  .section-title { font-size: 1.1rem; font-weight: 700; margin-top: 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid #e0e7ff; color: var(--primary); }
+  .checkbox-item { display: flex; align-items: flex-start; gap: 0.75rem; margin: 0.75rem 0; font-size: 0.9rem; }
+  input[type="checkbox"] { margin-top: 0.2rem; transform: scale(1.2); }
+  .score-card { background: #eef2ff; border: 1px solid #c7d2fe; border-radius: 8px; padding: 1.25rem; margin-top: 2rem; display: flex; justify-content: space-between; align-items: center; }
+  .score-num { font-size: 2.5rem; font-weight: 800; color: var(--primary); }
+  .score-tier { font-size: 1rem; font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>MENA Mobile Checkout Friction Grader</h1>
+  <p style="color: #64748b; font-size: 0.875rem;">Interactive 15-point diagnostic scorecard for Saudi / UAE / Egypt e-commerce conversion optimization.</p>
+
+  <div class="section-title">1. Payment & Local Gateways (30 pts)</div>
+  <div class="checkbox-item"><input type="checkbox" class="chk" data-points="10" checked> Mada / Apple Pay one-click checkout enabled without redirect</div>
+  <div class="checkbox-item"><input type="checkbox" class="chk" data-points="10" checked> BNPL available (Tabby / Tamara) with clear 4-installment breakdown</div>
+  <div class="checkbox-item"><input type="checkbox" class="chk" data-points="10"> Local COD with OTP validation or local wallet (Vodafone Cash / STC Pay)</div>
+
+  <div class="section-title">2. Mobile Form Usability (35 pts)</div>
+  <div class="checkbox-item"><input type="checkbox" class="chk" data-points="10" checked> Guest Checkout enabled (no forced account creation)</div>
+  <div class="checkbox-item"><input type="checkbox" class="chk" data-points="10"> HTML5 telephone keyboard (`type="tel"`) on phone number input</div>
+  <div class="checkbox-item"><input type="checkbox" class="chk" data-points="10" checked> Saudi National Address / Google Places autocomplete active</div>
+  <div class="checkbox-item"><input type="checkbox" class="chk" data-points="5"> Less than 6 total input fields across entire checkout</div>
+
+  <div class="section-title">3. Speed & Friction Killers (35 pts)</div>
+  <div class="checkbox-item"><input type="checkbox" class="chk" data-points="10" checked> Total price, shipping, and VAT displayed transparently upfront</div>
+  <div class="checkbox-item"><input type="checkbox" class="chk" data-points="15" checked> Checkout page loads in under 1.8 seconds on 4G mobile</div>
+  <div class="checkbox-item"><input type="checkbox" class="chk" data-points="10"> Persistent visible Order Summary with collapsible item preview</div>
+
+  <div class="score-card">
+    <div>
+      <div style="font-size: 0.85rem; color: #4338ca; font-weight: 600;">CHECKOUT READINESS SCORE</div>
+      <div class="score-tier" id="gradeLabel">Grade: B (Good Conversion Baseline)</div>
+    </div>
+    <div class="score-num" id="scoreDisplay">75 / 100</div>
+  </div>
+</div>
+
+<script>
+function updateScore() {
+  let score = 0;
+  document.querySelectorAll('.chk:checked').forEach(c => {
+    score += parseInt(c.getAttribute('data-points'), 10);
+  });
+  
+  document.getElementById('scoreDisplay').innerText = score + " / 100";
+  const gradeEl = document.getElementById('gradeLabel');
+  if (score >= 90) gradeEl.innerText = "Grade: A+ (World-Class Frictionless Flow)";
+  else if (score >= 75) gradeEl.innerText = "Grade: B (Good Baseline, Minor Friction)";
+  else if (score >= 50) gradeEl.innerText = "Grade: C (Moderate Cart Abandonment Risk)";
+  else gradeEl.innerText = "Grade: F (High Friction, Severe Drop-off)";
+}
+
+document.querySelectorAll('.chk').forEach(c => c.addEventListener('change', updateScore));
+updateScore();
+</script>
+</body>
+</html>
